@@ -9,6 +9,26 @@ import { AlarmPanel } from '@/components/dashboard/AlarmPanel';
 import { FlowAnalytics } from '@/components/dashboard/FlowAnalytics';
 import { dataGenerator } from '@/lib/data-generator';
 import { NetworkTopology, AnomalyDetection, Alarm, DashboardMetrics } from '@/types';
+import { NetworkGraph } from '@/components/network/NetworkGraph';
+
+export default function Home() {
+  return (
+    <main className="min-h-screen bg-slate-950 p-6">
+      <div className="mx-auto max-w-7xl">
+        <header className="mb-6">
+          <h1 className="text-3xl font-bold text-white">
+            🌐 Flow Anomaly Detection — Network Control
+          </h1>
+          <p className="mt-1 text-sm text-gray-400">
+            Real-time topology visualization with per-node control
+          </p>
+        </header>
+
+        <NetworkGraph />
+      </div>
+    </main>
+  );
+}
 
 export default function Dashboard() {
   const [topology, setTopology] = useState<NetworkTopology | null>(null);
