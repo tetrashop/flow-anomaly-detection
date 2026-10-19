@@ -9,26 +9,6 @@ import { AlarmPanel } from '@/components/dashboard/AlarmPanel';
 import { FlowAnalytics } from '@/components/dashboard/FlowAnalytics';
 import { dataGenerator } from '@/lib/data-generator';
 import { NetworkTopology, AnomalyDetection, Alarm, DashboardMetrics } from '@/types';
-import { NetworkGraph } from '@/components/network/NetworkGraph';
-
-export default function Home() {
-  return (
-    <main className="min-h-screen bg-slate-950 p-6">
-      <div className="mx-auto max-w-7xl">
-        <header className="mb-6">
-          <h1 className="text-3xl font-bold text-white">
-            🌐 Flow Anomaly Detection — Network Control
-          </h1>
-          <p className="mt-1 text-sm text-gray-400">
-            Real-time topology visualization with per-node control
-          </p>
-        </header>
-
-        <NetworkGraph />
-      </div>
-    </main>
-  );
-}
 
 export default function Dashboard() {
   const [topology, setTopology] = useState<NetworkTopology | null>(null);
@@ -48,11 +28,9 @@ export default function Dashboard() {
   // Initialize dashboard data
   useEffect(() => {
     const initializeData = () => {
-      // Generate initial topology
       const initialTopology = dataGenerator.generateTopology();
       setTopology(initialTopology);
 
-      // Generate some initial anomalies and alarms
       const initialAnomalies: AnomalyDetection[] = [];
       const initialAlarms: Alarm[] = [];
 
@@ -68,7 +46,6 @@ export default function Dashboard() {
       setAnomalies(initialAnomalies);
       setAlarms(initialAlarms);
 
-      // Update metrics
       setMetrics(prev => ({
         ...prev,
         totalFlows: 1247,
@@ -92,16 +69,15 @@ export default function Dashboard() {
     if (!isSimulating) return;
 
     const interval = setInterval(() => {
-      // Generate new flow and potentially an anomaly
-      const isAnomalous = Math.random() < 0.1; // 10% chance of anomaly
+      const isAnomalous = Math.random() < 0.1;
       const flow = dataGenerator.generateFlow(isAnomalous);
 
       if (isAnomalous) {
         const anomaly = dataGenerator.generateAnomaly(flow);
         const alarm = dataGenerator.generateAlarm(anomaly);
 
-        setAnomalies(prev => [anomaly, ...prev.slice(0, 19)]); // Keep last 20
-        setAlarms(prev => [alarm, ...prev.slice(0, 19)]); // Keep last 20
+        setAnomalies(prev => [anomaly, ...prev.slice(0, 19)]);
+        setAlarms(prev => [alarm, ...prev.slice(0, 19)]);
 
         setMetrics(prev => ({
           ...prev,
@@ -110,7 +86,6 @@ export default function Dashboard() {
         }));
       }
 
-      // Update metrics
       setMetrics(prev => ({
         ...prev,
         totalFlows: prev.totalFlows + 1,
@@ -123,7 +98,7 @@ export default function Dashboard() {
           current: 10 + Math.random() * 20,
         },
       }));
-    }, 2000); // Update every 2 seconds
+    }, 2000);
 
     return () => clearInterval(interval);
   }, [isSimulating]);
@@ -132,16 +107,14 @@ export default function Dashboard() {
   const stopSimulation = () => setIsSimulating(false);
 
   const startDDoSDemo = () => {
-    // Simulate DDoS attack
     const targetIp = '192.168.1.100';
     dataGenerator.generateDDoSAttack(targetIp, 60);
 
-    // Generate multiple anomalies quickly
     for (let i = 0; i < 10; i++) {
       setTimeout(() => {
         const flow = dataGenerator.generateFlow(true);
         flow.destinationIp = targetIp;
-        flow.bytes = 5000000 + Math.random() * 5000000; // Large volume
+        flow.bytes = 5000000 + Math.random() * 5000000;
 
         const anomaly = dataGenerator.generateAnomaly(flow);
         anomaly.type = 'volume';
@@ -154,7 +127,7 @@ export default function Dashboard() {
 
         setAnomalies(prev => [anomaly, ...prev]);
         setAlarms(prev => [alarm, ...prev]);
-      }, i * 500); // Stagger the anomalies
+      }, i * 500);
     }
   };
 
@@ -179,24 +152,19 @@ export default function Dashboard() {
       />
 
       <div className="container mx-auto p-6 space-y-6">
-        {/* Metrics Overview */}
         <MetricsOverview metrics={metrics} />
 
-        {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Network Visualization - Takes up 2 columns */}
           <div className="lg:col-span-2">
             <NetworkVisualization topology={topology} anomalies={anomalies} />
           </div>
 
-          {/* Side Panel */}
           <div className="space-y-6">
             <AlarmPanel alarms={alarms} />
             <AnomalyList anomalies={anomalies.slice(0, 5)} />
           </div>
         </div>
 
-        {/* Flow Analytics */}
         <FlowAnalytics metrics={metrics} />
       </div>
     </div>
