@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { X, Power, RefreshCw, Scan, FileText, Loader2 } from 'lucide-react';
 
 export type NodeStatus = 'online' | 'offline' | 'scanning';
+export type NodeType = 'server' | 'router' | 'firewall' | 'client' | 'switch';
 
 export interface NetworkNode {
   id: string;
