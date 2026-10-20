@@ -2,7 +2,7 @@
 
 import { useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Html, Sphere, Line } from '@react-three/drei';
+import { OrbitControls, Html, Line } from '@react-three/drei';
 import * as THREE from 'three';
 import { NetworkControlPanel, type NetworkNode, type NodeStatus, type NodeType } from './NetworkControlPanel';
 
