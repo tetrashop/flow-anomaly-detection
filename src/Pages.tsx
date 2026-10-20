@@ -1,4 +1,5 @@
 import { NetworkGraph } from '@/components/network/NetworkGraph';
+import Link from 'next/link';
 
 export default function NetworkPage() {
   return (
