@@ -25,7 +25,6 @@ export default function Dashboard() {
   });
   const [isSimulating, setIsSimulating] = useState(false);
 
-  // مقداردهی اولیه داده‌ها تا متغیرها استفاده شوند و خطای ESLint ندهند
   useEffect(() => {
     const initializeData = () => {
       if (dataGenerator && dataGenerator.generateTopology) {
