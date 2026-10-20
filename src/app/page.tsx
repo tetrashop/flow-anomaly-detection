@@ -12,8 +12,8 @@ import { NetworkTopology, AnomalyDetection, Alarm, DashboardMetrics } from '@/ty
 
 export default function Dashboard() {
   const [topology, setTopology] = useState<NetworkTopology | null>(null);
-  const [_anomalies, _setAnomalies] = useState<AnomalyDetection[]>([]);
-  const [_alarms, _setAlarms] = useState<Alarm[]>([]);
+  const [anomalies, setAnomalies] = useState<AnomalyDetection[]>([]);
+  const [alarms, setAlarms] = useState<Alarm[]>([]);
   const [metrics, setMetrics] = useState<DashboardMetrics>({
     totalFlows: 0,
     anomaliesDetected: 0,
@@ -25,17 +25,28 @@ export default function Dashboard() {
   });
   const [isSimulating, setIsSimulating] = useState(false);
 
+  // مقداردهی اولیه داده‌ها تا متغیرها استفاده شوند و خطای ESLint ندهند
   useEffect(() => {
     const initializeData = () => {
-      setTopology(dataGenerator.generateTopology());
-      setMetrics(prev => ({
-        ...prev,
-        totalFlows: 1247,
-        anomaliesDetected: 5,
-        activeAlarms: 2,
-        throughput: { current: 156.7, average: 142.3, peak: 289.1 },
-        latency: { current: 12.4, average: 15.2, p95: 28.7 },
-      }));
+      if (dataGenerator && dataGenerator.generateTopology) {
+        setTopology(dataGenerator.generateTopology());
+        
+        const flow = dataGenerator.generateFlow(true);
+        const anomaly = dataGenerator.generateAnomaly(flow);
+        const alarm = dataGenerator.generateAlarm(anomaly);
+        
+        setAnomalies([anomaly]);
+        setAlarms([alarm]);
+
+        setMetrics(prev => ({
+          ...prev,
+          totalFlows: 1247,
+          anomaliesDetected: 1,
+          activeAlarms: 1,
+          throughput: { current: 156.7, average: 142.3, peak: 289.1 },
+          latency: { current: 12.4, average: 15.2, p95: 28.7 },
+        }));
+      }
     };
     initializeData();
   }, []);
