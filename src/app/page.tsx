@@ -12,8 +12,8 @@ import { NetworkTopology, AnomalyDetection, Alarm, DashboardMetrics } from '@/ty
 
 export default function Dashboard() {
   const [topology, setTopology] = useState<NetworkTopology | null>(null);
-  const [anomalies, setAnomalies] = useState<AnomalyDetection[]>([]);
-  const [alarms, setAlarms] = useState<Alarm[]>([]);
+  const [_anomalies, _setAnomalies] = useState<AnomalyDetection[]>([]);
+  const [_alarms, _setAlarms] = useState<Alarm[]>([]);
   const [metrics, setMetrics] = useState<DashboardMetrics>({
     totalFlows: 0,
     anomaliesDetected: 0,
