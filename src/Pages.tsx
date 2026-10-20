@@ -13,10 +13,10 @@ export default function NetworkPage() {
             Real-time topology visualization with per-node control
           </p>
           <Link href="/"
-            className="mt-3 inline-block rounded bg-blue-600 px-3 py-1.5 text-sm text-white hover:bg-blue-700"
-          >
-            ← Back to Dashboard
-          </a>
+  className="mt-3 inline-block rounded bg-blue-600 px-3 py-1.5 text-sm text-white hover:bg-blue-700"
+>
+  ← Back to Dashboard
+</Link>
         </header>
         <NetworkGraph />
       </div>
