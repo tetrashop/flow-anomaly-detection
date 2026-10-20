@@ -11,8 +11,7 @@ export default function NetworkPage() {
           <p className="mt-1 text-sm text-gray-400">
             Real-time topology visualization with per-node control
           </p>
-          <a
-            href="/"
+          <Link href="/"
             className="mt-3 inline-block rounded bg-blue-600 px-3 py-1.5 text-sm text-white hover:bg-blue-700"
           >
             ← Back to Dashboard
